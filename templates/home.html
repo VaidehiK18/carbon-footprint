@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Calculate carbon footprint</title>
+  </head>
+  <body>
+    <h1>Carbon footprint</h1>
+    <form id="script-form">
+      <textarea id="script-content" rows="10" cols="50"></textarea>
+      <br />
+      <input type="submit" value="Check emissions" />
+    </form>
+    <div id="output"></div>
+
+    <script>
+      document.getElementById("script-form").onsubmit = function (e) {
+        e.preventDefault();
+        const scriptContent = document.getElementById("script-content").value;
+        fetch("/execute_script", {
+          method: "POST",
+          body: new URLSearchParams({ script_content: scriptContent }),
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            document.body.innerHTML = data; // Replace the whole body content with the result page
+          });
+      };
+    </script>
+  </body>
+</html>
