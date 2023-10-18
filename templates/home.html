@@ -6,19 +6,18 @@
   <body>
     <h1>Carbon footprint</h1>
     <form id="script-form">
-      <textarea id="script-content" rows="10" cols="50"></textarea>
-      <br />
+      <input type="file" id="filename" />
       <input type="submit" value="Check emissions" />
     </form>
-    <div id="output"></div>
+    <pre>Emissions are <div id="output"></div></pre>
 
     <script>
       document.getElementById("script-form").onsubmit = function (e) {
         e.preventDefault();
-        const scriptContent = document.getElementById("script-content").value;
+        const fileName = document.getElementById("filename").value;
         fetch("/execute_script", {
           method: "POST",
-          body: new URLSearchParams({ script_content: scriptContent }),
+          body: new URLSearchParams({ filename: fileName }),
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },

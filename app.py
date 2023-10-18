@@ -12,11 +12,11 @@ def index():
 @app.route('/execute_script', methods=['POST'])
 def execute_script():
     # Fetch the Python script content from the frontend
-    script_content = request.form['script_content']
+    filename = request.form['filename']
 
     # Save the script content to a temporary file
     with open('scripts/uploaded_script.py', 'w') as script_file:
-        script_file.write(script_content)
+        script_file.write(filename)
 
     # Execute the script
     try:
@@ -24,7 +24,7 @@ def execute_script():
     except subprocess.CalledProcessError as e:
         output = e.output
 
-    # The script generates a CSV file 'emissions.csv', read and render a specific column
+    # The script generates a CSV file 'emissions.csv', read and render specific columns
     csv_column = read_csv_column('emissions.csv', column_name=['emissions','emissions_rate','cpu_power','gpu_power','ram_power','cpu_energy','gpu_energy','ram_energy','energy_consumed'])
     print(f"csv_column = {csv_column}")
     # Remove the temporary script file
@@ -36,7 +36,7 @@ def read_csv_column(file_path, column_name):
     import csv
     with open(file_path, 'r') as csv_file:
         df = pd.read_csv(csv_file)
-        print(df)
+        # Get the latest record, i.e the last one from emissions.csv
         data = df.tail(1)[column_name]
     return data
 
