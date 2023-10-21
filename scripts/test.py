@@ -1,10 +1,10 @@
 import pandas as pd
 from codecarbon import track_emissions
-import corsheader
+# import corsheader
 
 @track_emissions()
 def track():
-    df = pd.read_csv('CarbonEmission1India.csv')
+    df = pd.read_csv('../CarbonEmission1India.csv')
     print(df)
     print(df[df['States']=='West Bengal'])
     for row in df.iterrows():
