@@ -9,9 +9,31 @@
       <input type="file" id="filename" />
       <input type="submit" value="Check emissions" />
     </form>
-    <pre>Emissions are <div id="output"></div></pre>
+    <div id="output" class="toshow" style="display:none">
+      <table id="data-table">
+        <thead>
+            <tr>
+                <th>Emissions</th>
+                <th>Emissions_rate</th>
+                <th>CPU_energy</th>
+                <th>GPU_energy</th>
+                <th>RAM_energy</th>
+                <th>Energy_consumed</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    </div>
+    
 
     <script>
+      
+      function showEmission(data){
+        const csv_column = data.csv_column
+        const emissionDiv = document.getElementById("values")
+        emissionDiv.innerhtml = `<pre>${csv_column}</pre>`;
+      }
       document.getElementById("script-form").onsubmit = function (e) {
         e.preventDefault();
         const fileName = document.getElementById("filename").value;
@@ -22,11 +44,26 @@
             "Content-Type": "application/x-www-form-urlencoded",
           },
         })
-          .then((response) => response.text())
-          .then((data) => {
-            document.getElementById("output").innerHTML = `<pre>${data}</pre>`;
-          });
-      };
+          .then(response => response.json())
+          .then(data => {
+                const dataTable = document.getElementById('data-table').getElementsByTagName('tbody')[0];
+                data.csv_column.forEach(record => {
+                    const row = dataTable.insertRow(dataTable.rows.length);
+                    const cell1 = row.insertCell(0);
+                    const cell2 = row.insertCell(1);
+                    const cell3 = row.insertCell(2);
+                    const cell4 = row.insertCell(3);
+                    const cell5 = row.insertCell(4);
+                    const cell6 = row.insertCell(5);
+                    cell1.innerHTML = record.emissions;
+                    cell2.innerHTML = record.emissions_rate;
+                    cell3.innerHTML = record.cpu_energy;
+                    cell4.innerHTML = record.gpu_energy;
+                    cell5.innerHTML = record.ram_energy;
+                    cell5.innerHTML = record.energy_consumed;
+                });
+            })
+          };      
     </script>
   </body>
 </html>
