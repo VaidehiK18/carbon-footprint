@@ -60,15 +60,16 @@
         }
 }
       document.getElementById("script-form").onsubmit = function (e) {
-        e.preventDefault();        
-        file = document.getElementById('file').files[0]
-        console.log(file)
+        e.preventDefault();   
+        const selectedFile = document.getElementById("file").files[0];
+        console.log(selectedFile)
+        if (selectedFile) {
+        let formdata = new FormData();
+        formdata.append("file",selectedFile);
+
         fetch('http://127.0.0.1:5000/execute_script', {
-            method: 'POST',            
-            headers: {
-            "Content-Type": "application/multipart/form-data",
-          },
-            body: file,
+            method: 'POST',  
+            body: formdata,
         })
         .then((response) => response.json())
           .then((data) => {
@@ -93,7 +94,10 @@
     alert("No internet Connection")
     
   });
-      };
+      }
+    else{
+      alert("No file selected")
+    }}
       
     </script>
   </body>
