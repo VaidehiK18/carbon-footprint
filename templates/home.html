@@ -7,8 +7,8 @@
     <div id="maindiv">
       <h1>CARBON FOOTPRINT</h1>
       <h3>Please upload the file for testing the emissions:</h3>
-    <form id="script-form">
-      <input type="file" id="filename" /><br/><br/>
+    <form id="script-form",enctype="multipart/form-data">
+      <input type="file" id="file" /><br/><br/>
       <input type="submit" value="Check Emissions" />
     </form>
     
@@ -43,6 +43,10 @@
           </tbody>
       </table>
     </div>
+    <h3 style="font-family: Georgia, 'Times New Roman', Times, serif; color:black;">Change Code:</h3>
+  <form action="indexAPI.html" method="post">
+    <input type="submit" value = "View Changed Code">
+  </form>
     </div>
 
     <script>
@@ -56,21 +60,17 @@
         }
 }
       document.getElementById("script-form").onsubmit = function (e) {
-        e.preventDefault();
-        const fileName = document.getElementById("filename").value;
-        if(!fileName)
-        {
-          alert("No file uploaded")
-          return;
-        }
-        fetch("http://127.0.0.1:5000/execute_script", {
-          method: "POST",
-          body: new URLSearchParams({ filename: fileName }),
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+        e.preventDefault();        
+        file = document.getElementById('file').files[0]
+        console.log(file)
+        fetch('http://127.0.0.1:5000/execute_script', {
+            method: 'POST',            
+            headers: {
+            "Content-Type": "application/multipart/form-data",
           },
+            body: file,
         })
-          .then((response) => response.json())
+        .then((response) => response.json())
           .then((data) => {
             // document.getElementById("output").innerHTML = `<pre>${data}</pre>`;
             console.log(data)
@@ -150,4 +150,55 @@ body
   margin-top: 50px;
 }
 
-</style>
+</style> -->
+<!------------------------------------------->
+<!-- <!doctype html>
+<html>
+  <head>
+    <title >Calculate carbon footprint</title>
+    <link rel = "stylesheet" href = "styleHOME.css">
+  </head>
+  <body>
+    <header class = "fixed-header"style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><h1>Carbon Footprint of Code</h1></header>
+    <div class = "main">
+    <form id="script-form">
+      <p><h3>
+        <label for="mytext" style="font-family: Georgia, 'Times New Roman', Times, serif; color:black;">Enter Code file:</label>
+    </h3>
+    </p>
+      <input type="file"  id="filename" />
+      <button type="submit">Check Emissions</button>
+    </form>
+    <p>
+    <div>
+      <h3 style="font-family: Georgia, 'Times New Roman', Times, serif; color:black;">Emissions Response:</h3>
+      <textarea id="response" rows="10" style="width: 80%; background-color:rgb(248, 249, 192);" readonly></textarea>
+  </div>
+  </p>
+  <h3 style="font-family: Georgia, 'Times New Roman', Times, serif; color:black;">Change Code:</h3>
+  <form action="indexAPI.html" method="post">
+    <input type="submit" value = "View Changed Code">
+  </form>
+  <p>
+  </p>
+    </div>
+    
+    <script>
+      document.getElementById("script-form").onsubmit = function (e) {
+        e.preventDefault();
+        const fileName = document.getElementById("filename").value;
+        fetch("/execute_script", {
+          method: "POST",
+          body: new URLSearchParams({ filename: fileName }),
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            document.getElementById("output").innerHTML = `<pre>${data}</pre>`;
+          });
+      };
+    </script>
+  </body>
+</html> 

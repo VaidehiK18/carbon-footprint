@@ -1,0 +1,60 @@
+body{
+    /*background-image: url(https://c4.wallpaperflare.com/wallpaper/836/532/876/spots-background-light-solid-wallpaper-preview.jpg);
+    */
+    background-image: url(https://images.template.net/115234/free-plain-pastel-green-background-9c9ve.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position-y: top;
+}
+.fixed-header{
+    position:absolute;
+    width:100%;
+    top:0;
+    left:0;
+    background-color: #333;
+    color:#fff;
+    padding: 15px 0;
+    text-align:center;
+}
+.main{
+   position:absolute;
+   top:25%;
+   left: 20%;
+   width : 800px;
+   border:2px solid #000;
+   padding: 40px;
+   background-color: rgba(0, 0, 0, 0.3);
+   color:black;
+   border-radius:12px;
+   padding-top: 80px;
+}
+#filename::-webkit-file-upload-button
+{
+    visibility: hidden;
+}
+#filename, input[type = submit],#Color
+{
+    width: 90%;
+    height: 70px;
+    text-align: center;
+    margin-bottom:20px;
+    font-size:17px;
+    border:1 px solid #000;
+    letter-spacing: 2px;
+    border-radius: 5px;
+    background-color:white;
+    color:black;
+    transition: .5s all;
+}
+#filename
+{
+    width:84%;
+    height: 55px;
+    padding-top: 23px;
+    padding-left:20px;
+}
+#filename:hover,input[type=submit]:hover, #Color:hover{
+    cursor:pointer;
+    background-color:#4287f5;
+}
